@@ -22,7 +22,7 @@
                 <div id="bio-section" class="flex flex-col justify-center items-center">
                     <img x-bind:src="user?.avater ? user?.avater : 'https://ui-avatars.com/api/?background=random&name='+user?.name" alt="face" class="rounded-full w-32 h-32">
                     <h3 class="text-white text-3xl font-bold mt-4 text-center">Hi, I'm <span class="text-yellow-500" x-text="user?.name"></span></h3>
-                    <p class="text-white text-xl mt-2" x-text="user?.bio"></p>
+                    <p class="text-white text-xl mt-2 text-center" x-text="user?.bio"></p>
                     <a x-bind:href="'mailto:'+user?.email" class="text-white text-lg mt-2">
                         <div x-heroicon="'s-envelope'" class="w-5 h-5 inline-block"></div>
                         <span class="ml-2" x-text="user?.email"></span>
