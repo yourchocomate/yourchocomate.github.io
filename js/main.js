@@ -1,17 +1,19 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('app', () => {
+    Alpine.data('app', (name) => {
         return {
+            init() {
+                this.fetchHandle(name);
+            },
             loading: true,
+            modal: false, 
+            modalContent: '',
             user: null,
             socials: [],
             portfolios: [],
-            fetchHandle: function (url, callback) {
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => callback(data))
-            },
-            fetchData: function () {
-                this.fetchHandle('https://tree.yourchocomate.one/api/handle/yourchocomate', (data) => {
+            fetchHandle: function (handle) {
+                fetch('https://tree.yourchocomate.one/api/handle/' + handle)
+                .then(response => response.json())
+                .then(data => {
                     this.loading = false;
                     this.user = data.user;
                     this.socials = data.handles.social;
@@ -33,7 +35,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.directive('heroicon', (el, { expression }, { evaluate }) => {
         const classvalues = el.getAttribute('class');
         const name = evaluate(expression).toString().trim();
-        fetch(`icons/svg/${name}.svg`)
+        fetch(`https://raw.githubusercontent.com/yourchocomate/heroicons-svg/main/svg/${name}.svg`)
         .then(response => response.text())
         .then(data => {
             el.outerHTML = classvalues?.length > 0 ? data.replace('<svg', `<svg class="${classvalues}"`) : data;

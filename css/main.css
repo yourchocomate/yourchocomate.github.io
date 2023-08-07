@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Handjet&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handjet&family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handjet&family=Lato&family=Nunito&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .bg-mirage {
+        @apply bg-gradient-to-r from-[#000000] to-[#434343];
+    }
+}
