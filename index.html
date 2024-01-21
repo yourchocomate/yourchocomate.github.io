@@ -19,18 +19,43 @@
             <span class="loading loading-bars loading-lg"></span>
         </div>
 
-        <div x-show="!loading" class="container max-w-4xl px-8 py-8 mx-auto">
+        <div id="app" x-show="!loading" class="hidden container max-w-4xl px-8 py-8 mx-auto">
             <div class="flex flex-col justify-center">
                 <div id="bio-section" class="flex flex-col items-center justify-center">
                     <img x-bind:src="user?.avater ? user.avater : 'https://ui-avatars.com/api/?background=random&name=' + user?.name"
                         alt="face" class="w-32 h-32 rounded-full">
                     <h3 class="mt-4 text-3xl font-bold text-center text-white">Hi, I'm <span class="text-yellow-500"
                             x-text="user?.name"></span></h3>
-                    <p class="mt-2 text-xl text-center text-white" x-text="user?.bio"></p>
+                    <p class="mt-2 text-xl text-center text-white" x-html="user?.bio"></p>
                     <a x-bind:href="'mailto:'+user?.email" class="mt-2 text-lg text-white">
                         <div x-heroicon="'s-envelope'" class="inline-block w-5 h-5"></div>
                         <span class="ml-2" x-text="user?.email"></span>
                     </a>
+                </div>
+                <div x-show="skills?.length > 0" id="skills"
+                    class="flex flex-col items-center justify-center w-full col-span-2 mt-2">
+                    <div class="flex flex-col items-center justify-center w-full mt-2 sm:w-1/2">
+                        <div class="flex flex-wrap flex-row gap-3 items-center justify-center">
+                            <template x-for="sk in skills">
+                                <div 
+                                    @click="modal = !modal; modalContent = sk?.description"
+                                    class="flex flex-row gap-2 items-center justify-center tooltip lg:tooltip-right tooltip-primary"
+                                    x-bind:data-tip="sk?.tooltip">
+                                    <div class="w-4 h-4">
+                                        <template x-if="checkIfURL(sk?.icon)">
+                                            <img x-bind:src="sk?.icon" alt="icon" class="w-full">
+                                        </template>
+                                        <template x-if="!checkIfURL(sk?.icon)">
+                                            <div x-heroicon="sk?.icon"></div>
+                                        </template>
+                                    </div>
+                                    <span class="text-md text-center text-white"
+                                        x-text="sk?.label"></span>
+                                </div>
+                            </template>
+                            <span class="text-md text-center text-white">and more...</span>
+                        </div>
+                    </div>
                 </div>
                 <div x-show="socials?.length > 0" id="social-handles"
                     class="flex flex-col items-center justify-center w-full mt-2">

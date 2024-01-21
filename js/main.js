@@ -2,22 +2,27 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('app', (name) => {
         return {
             init() {
-                this.fetchHandle(name);
+                this.fetchHandle(name, () => {
+                    document.getElementById('app').classList.remove('hidden');
+                });
             },
             loading: true,
             modal: false, 
             modalContent: '',
             user: null,
+            skills: [],
             socials: [],
             portfolios: [],
-            fetchHandle: function (handle) {
+            fetchHandle: function (handle, callback) {
                 fetch('https://tree.yourchocomate.one/api/handle/' + handle)
                 .then(response => response.json())
                 .then(data => {
                     this.loading = false;
                     this.user = data.user;
+                    this.skills = data.handles.skill;
                     this.socials = data.handles.social;
                     this.portfolios = data.handles.portfolio;
+                    if (callback) callback();
                 })
             },
             checkIfURL: function(string) {
